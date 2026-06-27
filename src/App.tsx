@@ -358,8 +358,8 @@ export default function App() {
     try {
       const user = await api.login(loginUsername, loginPassword);
       setCurrentUser(user);
-    } catch (error) {
-      setLoginError("Invalid username or password");
+    } catch (error: any) {
+      setLoginError(error.message || "Invalid username or password");
     }
   };
 

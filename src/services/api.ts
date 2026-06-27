@@ -17,7 +17,11 @@ export const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-    if (!res.ok) throw new Error("Invalid credentials");
+    if (!res.ok) {
+      if (res.status === 401) throw new Error("Invalid username or password");
+      if (res.status === 404) throw new Error("API not found. Make sure the backend server is running.");
+      throw new Error(`Server error: ${res.status}`);
+    }
     const user = await res.json();
     localStorage.setItem("chemtrace_user", JSON.stringify(user));
     return user;
