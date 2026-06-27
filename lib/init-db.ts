@@ -209,5 +209,26 @@ export async function initDb() {
     }
   }
 
+  // Backfill disposal transactions if none exist
+  const { rows: transCount } = await query("SELECT COUNT(*)::INTEGER as count FROM transactions WHERE type = 'disposal'");
+  if (transCount.length > 0 && transCount[0].count === 0) {
+    const { rows: invItems } = await query('SELECT id, quantity FROM inventory LIMIT 15');
+    const users = ['admin', 'tech'];
+    const reasons = ["Expired", "Contaminated", "Spilled", "Project Terminated", "Regulatory Requirement", "Quality Control Failure"];
+    for (const item of invItems) {
+      const dispQty = Math.floor(Math.random() * 5) + 1;
+      const user = users[Math.floor(Math.random() * users.length)];
+      const reason = reasons[Math.floor(Math.random() * reasons.length)];
+      const date = new Date();
+      date.setDate(date.getDate() - Math.floor(Math.random() * 30));
+      
+      await query(
+        `INSERT INTO transactions (inventory_id, type, quantity, "user", date, notes) VALUES ($1, 'disposal', $2, $3, $4, $5)`,
+        [item.id, dispQty, user, date.toISOString(), reason]
+      );
+      await query(`UPDATE inventory SET quantity = GREATEST(0, quantity - $1) WHERE id = $2`, [dispQty, item.id]);
+    }
+  }
+
   initialized = true;
 }
