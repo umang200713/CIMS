@@ -1,0 +1,101 @@
+Chemical ID,Chemical Name,CAS Number,Category,Quantity,Unit,Storage Location,Expiry Date,Hazard Level,Storage Condition,Status,Notes
+CHEM001,Ethanol,64-17-5,Solvent/Flammable,500,mL,Cabinet A1,2027-12-31,Medium,Flammable Cabinet,Available,Keep away from open flames and sparks.
+CHEM002,Hydrochloric Acid,7647-01-0,Acid/Corrosive,2.5,L,Cabinet B2,2028-06-15,High,Corrosive Cabinet,Available,Fuming acid. Handle under fume hood.
+CHEM003,Sodium Hydroxide,1310-73-2,Base/Corrosive,1000,g,Shelf C1,2028-09-30,High,Corrosive Cabinet,Available,Hygroscopic pellets. Keep tightly closed.
+CHEM004,Acetone,67-64-1,Solvent/Flammable,4,L,Cabinet A1,2027-11-20,Medium,Flammable Cabinet,Available,High volatility. Store in cool place.
+CHEM005,Acetic Acid,64-19-7,Acid/Corrosive,1,L,Cabinet B3,2028-01-10,Medium,Corrosive Cabinet,Available,Glacial acetic acid. Freeze warning < 16°C.
+CHEM006,Nitric Acid,7697-37-2,Oxidizer/Acid,500,mL,Cabinet B2,2026-05-18,High,Corrosive Cabinet,Expired,Strong oxidizer. Do not store near organic acids.
+CHEM007,Sulfuric Acid,7664-93-9,Acid/Corrosive,2.5,L,Cabinet B2,2029-03-22,High,Corrosive Cabinet,Available,Highly corrosive. Reacts violently with water.
+CHEM008,Methanol,67-56-1,Solvent/Toxic,1,L,Cabinet A2,2027-08-14,High,Flammable Cabinet,Available,Toxic by inhalation and ingestion.
+CHEM009,Isopropanol,67-63-0,Solvent/Flammable,50,mL,Cabinet A1,2027-10-05,Medium,Flammable Cabinet,Low Stock,Standard laboratory solvent.
+CHEM010,Hexane,110-54-3,Solvent/Flammable,2,L,Cabinet A2,2028-04-12,Medium,Flammable Cabinet,Available,Neurotoxin risk. Use under fume hood.
+CHEM011,Toluene,108-88-3,Solvent/Flammable,1,L,Cabinet A2,2027-07-29,High,Flammable Cabinet,Available,Reproductive hazard. Keep well ventilated.
+CHEM012,Dichloromethane,75-09-2,Solvent/Toxic,500,mL,Cabinet D1,2028-02-14,High,Room Temperature,Available,Volatile chlorinated solvent. Carcinogen risk.
+CHEM013,Chloroform,67-66-3,Solvent/Toxic,250,mL,Cabinet D1,2026-03-01,High,Room Temperature,Expired,Light sensitive. Stabilized with ethanol.
+CHEM014,Tetrahydrofuran,109-99-9,Solvent/Flammable,1,L,Cabinet A3,2027-05-10,High,Flammable Cabinet,Available,May form explosive peroxides. Test regularly.
+CHEM015,Ethyl Acetate,141-78-6,Solvent/Flammable,2,L,Cabinet A1,2028-11-05,Medium,Flammable Cabinet,Available,Common extraction solvent.
+CHEM016,Ammonia Solution,1336-21-6,Base/Corrosive,1,L,Cabinet B4,2027-09-19,Medium,Corrosive Cabinet,Available,Strong irritating odor. Store in ventilated area.
+CHEM017,Phosphoric Acid,7664-38-2,Acid/Corrosive,500,mL,Cabinet B3,2028-12-15,Medium,Corrosive Cabinet,Available,Viscous liquid. Corrosive to metals.
+CHEM018,Potassium Hydroxide,1310-58-3,Base/Corrosive,500,g,Shelf C1,2028-04-18,High,Corrosive Cabinet,Available,Hygroscopic. Deliquescent pellets.
+CHEM019,Hydrogen Peroxide (30%),7722-84-1,Oxidizer/Corrosive,250,mL,Refrigerator 1,2026-02-28,High,Refrigerated,Expired,Vented cap. Store upright to prevent pressure build-up.
+CHEM020,Sodium Carbonate,497-19-8,Salt/Irritant,1,kg,Shelf C2,2030-01-01,Low,Room Temperature,Available,Mild base. Used for neutralization.
+CHEM021,Sodium Bicarbonate,144-55-8,Salt/None,5,kg,Shelf C2,2031-06-30,Low,Room Temperature,Available,Baking soda. Emergency spill neutralizer.
+CHEM022,Calcium Chloride,10043-52-4,Salt/Irritant,500,g,Shelf C3,2029-10-14,Low,Room Temperature,Available,Desiccant. Keep container tightly sealed.
+CHEM023,Magnesium Sulfate,7487-88-9,Salt/None,1,kg,Shelf C3,2030-05-25,Low,Room Temperature,Available,Anhydrous drying agent.
+CHEM024,Potassium Permanganate,7722-64-7,Oxidizer/Toxic,250,g,Cabinet E1,2028-12-01,High,Room Temperature,Available,Strong oxidizer. Stains skin purple.
+CHEM025,Silver Nitrate,7761-88-8,Oxidizer/Corrosive,100,g,Cabinet E1,2028-08-11,High,Room Temperature,Available,Light sensitive. Store in amber bottle.
+CHEM026,Iodine,7553-56-2,Halogen/Toxic,5,g,Cabinet D2,2027-03-15,High,Room Temperature,Low Stock,Corrosive vapor. Sublimes at room temperature.
+CHEM027,Phenolphthalein,77-09-8,Indicator/None,100,g,Shelf D1,2030-04-10,Medium,Room Temperature,Available,pH Indicator (Colorless to Pink).
+CHEM028,Methyl Orange,547-58-0,Indicator/Toxic,25,g,Shelf D1,2029-11-20,High,Room Temperature,Available,Toxic azo dye indicator.
+CHEM029,Bromothymol Blue,76-59-5,Indicator/None,50,g,Shelf D1,2030-09-18,Low,Room Temperature,Available,pH Indicator (Yellow to Blue).
+CHEM030,Citric Acid,77-92-9,Organic Acid,500,g,Shelf C4,2029-07-04,Low,Room Temperature,Available,Weak organic acid. Mild irritant.
+CHEM031,Oxalic Acid,144-62-7,Organic Acid/Toxic,250,g,Cabinet B3,2028-05-19,High,Corrosive Cabinet,Available,Poisonous. Calcium-chelating agent.
+CHEM032,Barium Chloride,10361-37-2,Salt/Toxic,100,g,Cabinet D2,2028-10-25,High,Room Temperature,Available,Soluble barium salt. Highly toxic.
+CHEM033,Copper(II) Sulfate,7758-98-7,Salt/Toxic,500,g,Shelf C4,2029-02-17,Medium,Room Temperature,Available,Anhydrous or pentahydrate form. Toxic to aquatic life.
+CHEM034,Iron(III) Chloride,7705-08-0,Salt/Corrosive,250,g,Shelf C4,2028-11-12,Medium,Room Temperature,Available,Hygroscopic. Deliquescent.
+CHEM035,Zinc Sulfate,7733-02-0,Salt/Toxic,500,g,Shelf C4,2029-06-23,Medium,Room Temperature,Available,Irritant. Dangerous for environment.
+CHEM036,Manganese(II) Chloride,7773-01-5,Salt/Toxic,100,g,Shelf C5,2028-05-15,Medium,Room Temperature,Available,Hygroscopic pink crystals.
+CHEM037,Cobalt(II) Chloride,7646-79-9,Salt/Carcinogen,10,g,Cabinet D2,2027-12-10,High,Room Temperature,Low Stock,Humidity indicator (Blue when dry, pink when wet).
+CHEM038,Nickel(II) Sulfate,7786-81-4,Salt/Carcinogen,250,g,Cabinet D2,2028-01-09,High,Room Temperature,Available,Allergen. Confirmed human carcinogen.
+CHEM039,Lead(II) Nitrate,10099-74-8,Salt/Toxic,500,g,Cabinet D3,2027-04-18,High,Room Temperature,Available,Heavy metal hazard. Neurotoxin.
+CHEM040,Mercury(II) Chloride,7487-94-7,Salt/Highly Toxic,50,g,Cabinet D3,2027-11-03,High,Room Temperature,Available,Extremely toxic. Store locked up.
+CHEM041,Potassium Dichromate,7778-50-9,Oxidizer/Carcinogen,250,g,Cabinet E1,2026-09-14,High,Room Temperature,Expired,Strong oxidizer, carcinogen, mutagen.
+CHEM042,Sodium Azide,26628-22-8,Salt/Highly Toxic,10,g,Cabinet D3,2027-06-01,High,Room Temperature,Low Stock,Highly toxic. Reacts with metals to form explosive azides.
+CHEM043,Formaldehyde (37%),50-00-0,Aldehyde/Toxic,1,L,Cabinet D1,2026-10-31,High,Room Temperature,Expired,Sensitizer. Carcinogen. Keep well ventilated.
+CHEM044,Acetonitrile,75-05-8,Solvent/Flammable,4,L,Cabinet A3,2028-05-22,Medium,Flammable Cabinet,Available,Common HPLC mobile phase solvent.
+CHEM045,Dimethyl Sulfoxide (DMSO),67-68-5,Solvent/None,500,mL,Shelf D2,2029-03-12,Low,Room Temperature,Available,Rapidly penetrates skin carrying solutes.
+CHEM046,N,N-Dimethylformamide (DMF),68-12-2,Solvent/Toxic,1,L,Cabinet A3,2027-12-15,High,Flammable Cabinet,Available,Reproductive toxin. High boiling point.
+CHEM047,Pyridine,110-86-1,Solvent/Flammable,500,mL,Cabinet A4,2027-06-18,High,Flammable Cabinet,Available,Noxious odor. Base and solvent.
+CHEM048,Triethylamine,121-44-8,Organic Base,250,mL,Cabinet A4,2028-02-09,Medium,Flammable Cabinet,Available,Flammable amine. Strong fishy odor.
+CHEM049,Piperidine,110-89-4,Organic Base/Toxic,100,mL,Cabinet A4,2027-11-30,High,Flammable Cabinet,Available,Controlled substance (precursor). Store securely.
+CHEM050,Hydrazine Hydrate,10217-52-4,Reducing Agent/Toxic,100,mL,Cabinet D4,2027-08-25,High,Room Temperature,Available,Severe burn hazard. Cancer risk.
+CHEM051,Sodium Hydride (60% in oil),7646-69-7,Reactive/Flammable,100,g,Cabinet A4,2028-04-05,High,Flammable Cabinet,Available,Water reactive. Packaged under mineral oil.
+CHEM052,Lithium Aluminum Hydride,16853-85-3,Reactive/Flammable,25,g,Cabinet A4,2026-08-20,High,Flammable Cabinet,Expired,Water reactive pyrophoric powder.
+CHEM053,Borane Dimethyl Sulfide,13292-87-0,Reactive/Flammable,100,mL,Refrigerator 1,2027-09-01,High,Refrigerated,Available,Pyrophoric liquid. Stench warning.
+CHEM054,Thionyl Chloride,7719-09-7,Corrosive/Toxic,250,mL,Cabinet B3,2027-03-12,High,Corrosive Cabinet,Available,Reacts violently with water releasing SO2/HCl gas.
+CHEM055,Oxalyl Chloride,79-37-8,Corrosive/Toxic,100,mL,Cabinet B3,2028-06-30,High,Corrosive Cabinet,Available,Reacts violently with moisture. Use inert atmosphere.
+CHEM056,Benzoyl Chloride,98-88-4,Corrosive/Lachrymator,250,mL,Cabinet B3,2028-01-14,High,Corrosive Cabinet,Available,Lachrymator (makes you cry).
+CHEM057,Potassium Carbonate,584-08-7,Salt/Irritant,1,kg,Shelf C2,2030-05-18,Low,Room Temperature,Available,Hygroscopic white solid.
+CHEM058,Ammonium Chloride,12125-02-9,Salt/Irritant,500,g,Shelf C2,2029-08-22,Low,Room Temperature,Available,Sublimes on heating. Keep dry.
+CHEM059,Calcium Carbonate,471-34-1,Salt/None,1,kg,Shelf C2,2031-10-09,Low,Room Temperature,Available,Chalk/Limestone. Extremely stable.
+CHEM060,Sodium Sulfate,7757-82-6,Salt/None,2.5,kg,Shelf C3,2030-12-18,Low,Room Temperature,Available,Drying agent for organic phases.
+CHEM061,Potassium Nitrate,7757-79-1,Oxidizer,500,g,Cabinet E1,2029-04-20,Medium,Room Temperature,Available,Strong oxidizer. Keep away from combustibles.
+CHEM062,Ammonium Nitrate,6484-52-2,Oxidizer,500,g,Cabinet E2,2028-11-20,Medium,Room Temperature,Available,Explosion hazard when mixed with fuels.
+CHEM063,Sodium Nitrate,7631-99-4,Oxidizer,500,g,Cabinet E1,2029-07-15,Medium,Room Temperature,Available,Oxidizer. Keep dry.
+CHEM064,Magnesium Chloride,7786-30-3,Salt/None,500,g,Shelf C3,2030-02-12,Low,Room Temperature,Available,Hygroscopic salt.
+CHEM065,Aluminum Chloride,7446-70-0,Salt/Corrosive,250,g,Cabinet B3,2028-08-01,High,Corrosive Cabinet,Available,Anhydrous. Reacts violently with water.
+CHEM066,Ferrous Sulfate,7720-78-7,Salt/Toxic,500,g,Shelf C4,2028-09-08,Low,Room Temperature,Available,Oxidizes to yellow-brown in air/moisture.
+CHEM067,Zinc Chloride,7646-85-7,Salt/Corrosive,250,g,Cabinet B3,2028-12-10,High,Corrosive Cabinet,Available,Highly deliquescent. Keep tightly sealed.
+CHEM068,Potassium Iodide,7681-11-0,Salt/None,500,g,Shelf C3,2030-06-25,Low,Room Temperature,Available,Light sensitive. Turns yellow over time.
+CHEM069,Sodium Iodide,7681-82-5,Salt/None,250,g,Shelf C3,2030-09-15,Low,Room Temperature,Available,Hygroscopic. Light sensitive.
+CHEM070,Lithium Chloride,7447-41-8,Salt/Toxic,100,g,Shelf C5,2029-03-30,Medium,Room Temperature,Available,Extremely hygroscopic. Keep desiccated.
+CHEM071,Cesium Chloride,7647-17-8,Salt/None,50,g,Shelf C5,2031-02-14,Low,Room Temperature,Available,Used for density gradient centrifugation.
+CHEM072,Rubidium Chloride,7791-11-9,Salt/None,10,g,Shelf C5,2031-05-19,Low,Room Temperature,Available,Rare alkaline metal salt.
+CHEM073,Strontium Chloride,10476-85-4,Salt/None,100,g,Shelf C5,2030-08-11,Low,Room Temperature,Available,Produces red flame test color.
+CHEM074,Beryllium Sulfate,13510-49-1,Salt/Highly Toxic,5,g,Cabinet D3,2028-02-14,High,Room Temperature,Available,Extremely toxic, carcinogen. Handle with gloves.
+CHEM075,Cadmium Chloride,10108-64-2,Salt/Carcinogen,100,g,Cabinet D3,2027-09-30,High,Room Temperature,Available,Heavy metal hazard. Carcinogen.
+CHEM076,Antimony Trichloride,10025-91-9,Salt/Corrosive,100,g,Cabinet B3,2027-11-15,High,Corrosive Cabinet,Available,Reacts with moisture releasing HCl gas.
+CHEM077,Bismuth Nitrate,10361-44-1,Oxidizer/Corrosive,250,g,Cabinet E2,2028-05-22,Medium,Room Temperature,Available,Oxidizer. Keep dry.
+CHEM078,Tin(II) Chloride,7772-99-8,Salt/Corrosive,250,g,Cabinet B3,2028-04-18,Medium,Corrosive Cabinet,Available,Reducing agent. Keep dry.
+CHEM079,Titanium Tetrachloride,7550-45-0,Corrosive/Reactive,100,mL,Cabinet B3,2027-03-12,High,Corrosive Cabinet,Available,Fumes violently in air releasing TiO2 smoke/HCl.
+CHEM080,Vanadium(V) Oxide,1314-62-1,Oxide/Toxic,100,g,Cabinet D3,2028-11-01,High,Room Temperature,Available,Orange catalyst powder. Toxic.
+CHEM081,Chromium(III) Oxide,1308-38-9,Oxide/None,500,g,Shelf C5,2031-04-20,Low,Room Temperature,Available,Green pigment powder. Insoluble.
+CHEM082,Molybdenum Trioxide,1313-27-5,Oxide/Toxic,250,g,Cabinet D3,2028-06-30,Medium,Room Temperature,Available,Yellow/white catalyst.
+CHEM083,Tungsten Hexachloride,13283-01-7,Salt/Corrosive,100,g,Cabinet B3,2028-01-15,Medium,Corrosive Cabinet,Available,Moisture sensitive. Dark blue crystals.
+CHEM084,Uranyl Nitrate,10102-06-4,Radioactive/Toxic,25,g,Radioactive Safe,2035-12-31,High,Room Temperature,Available,Radioactive alpha-emitter. Stored in lead shielding.
+CHEM085,Thorium Nitrate,13823-29-5,Radioactive/Toxic,25,g,Radioactive Safe,2035-12-31,High,Room Temperature,Available,Radioactive thorium compound. Stored in lead shielding.
+CHEM086,Palladium(II) Chloride,7647-10-1,Catalyst/Toxic,5,g,Cabinet D2,2030-05-18,Medium,Room Temperature,Available,Noble metal catalyst.
+CHEM087,Platinum(IV) Chloride,13454-96-1,Catalyst/Corrosive,5,g,Cabinet D2,2029-08-01,High,Room Temperature,Available,Noble metal catalyst.
+CHEM088,Gold(III) Chloride,13453-07-1,Catalyst/Corrosive,1,g,Cabinet D2,2030-10-12,Medium,Room Temperature,Available,Light sensitive. Deliquescent.
+CHEM089,Silver Chloride,7783-90-6,Salt/None,100,g,Shelf C5,2031-11-19,Low,Room Temperature,Available,Light sensitive white precipitate.
+CHEM090,Copper(I) Chloride,7758-89-6,Salt/Toxic,250,g,Shelf C4,2028-05-25,Medium,Room Temperature,Available,Turns green on oxidation in air.
+CHEM091,Mercury(I) Nitrate,10415-75-5,Salt/Toxic,100,g,Cabinet D3,2027-02-14,High,Room Temperature,Available,Heavy metal toxicant. Store locked up.
+CHEM092,Lead(II) Acetate,301-04-2,Salt/Toxic,500,g,Cabinet D3,2028-12-05,High,Room Temperature,Available,Sugar of lead. Toxic for reproduction.
+CHEM093,Thallium(I) Sulfate,7446-18-6,Salt/Highly Toxic,10,g,Cabinet D3,2027-09-08,High,Room Temperature,Available,Extremely toxic rodenticide class. Store locked up.
+CHEM094,Indium(III) Chloride,10025-82-8,Salt/Corrosive,10,g,Shelf C5,2030-01-22,Medium,Room Temperature,Available,Hygroscopic.
+CHEM095,Gallium(III) Chloride,13450-90-3,Salt/Corrosive,10,g,Shelf C5,2030-04-18,Medium,Room Temperature,Available,Low melting point salt.
+CHEM096,Germanium Tetrachloride,10038-98-9,Corrosive/Liquid,50,mL,Cabinet B3,2028-09-12,High,Corrosive Cabinet,Available,Reacts with water to produce GeO2.
+CHEM097,Arsenic Trioxide,1327-53-3,Oxide/Highly Toxic,10,g,Cabinet D3,2027-04-18,High,Room Temperature,Available,Carcinogen. Highly toxic. Stored locked up.
+CHEM098,Selenium Dioxide,7446-08-4,Oxide/Toxic,100,g,Cabinet D3,2028-08-01,High,Room Temperature,Available,Sublimes to form toxic gas.
+CHEM099,Tellurium Dioxide,7446-07-3,Oxide/Toxic,100,g,Cabinet D3,2028-12-10,High,Room Temperature,Available,Suspected teratogen. Keep dry.
+CHEM100,Water (Ultra-pure),7732-18-5,Solvent/None,20,L,Shelf E1,2031-12-31,Low,Room Temperature,Available,18.2 MOhm deionized water for analytical use.
