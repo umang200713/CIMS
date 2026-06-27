@@ -1,6 +1,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const apiKey = process.env.GEMINI_API_KEY;
+const ai = (apiKey && apiKey !== "MY_GEMINI_API_KEY")
+  ? new GoogleGenAI({ apiKey })
+  : null;
 
 export interface HazardPrediction {
   potential_risks: string[];
@@ -20,8 +23,43 @@ export interface CompatibilityResult {
 function getLocalSafetyAdvice(query: string): string {
   const q = query.toLowerCase().trim();
 
-  // 1. Storage / Compatibility keywords
-  if (q.includes("compatibility") || q.includes("storage") || q.includes("group") || q.includes("where to store")) {
+  // 1. Dilution rules (critical for acids)
+  if (q.includes("dilute") || q.includes("dilution") || q.includes("diluting") || q.includes("add water")) {
+    return `### 🧪 Acid Dilution Safety Rules ("Do as you oughta, add acid to water")
+    
+When diluting concentrated acids, follow this safety protocol:
+- **ALWAYS add Acid to Water**, never the reverse. 
+- **Why?** Concentrated acids react highly exothermically with water. If you pour water into concentrated acid, the local heat generated can cause the mixture to flash boil and splatter concentrated acid out of the container.
+- Add the acid **slowly** in small portions while continuously stirring/swirling the container.
+- Perform the dilution in a heat-resistant vessel (like Borosilicate glass) and optionally place the container in an ice bath to absorb the heat.
+- Always work inside a certified **chemical fume hood** and wear full PPE (splash goggles, lab coat, face shield, and chemical-resistant gloves).
+
+---
+*Verified by CIMS Local Safety Engine*`;
+  }
+
+  // 2. Neutralization rules
+  if (q.includes("neutralize") || q.includes("neutralizing") || q.includes("neutralization")) {
+    return `### 🧯 Chemical Neutralization Protocol
+    
+When neutralizing lab spills, always use **weak** neutralizing agents to prevent a violent reaction:
+
+1. **For Acid Spills (pH < 7)**:
+   - Neutralize with a weak base such as **Sodium Bicarbonate** (Baking Soda) or **Sodium Carbonate**.
+   - Slowly sprinkle the powder over the outer edges of the spill, working your way inward.
+   - **Note:** Bubbling (carbon dioxide release) indicates neutralization is occurring. Wait until bubbling stops entirely before cleaning up.
+   - **Never** use a strong base (like Sodium Hydroxide or Potassium Hydroxide) to neutralize a spill; it will cause a violent, boiling reaction.
+
+2. **For Base/Alkali Spills (pH > 7)**:
+   - Neutralize with a weak acid such as **Citric Acid** or **dilute Acetic Acid**.
+   - **Never** use a strong mineral acid (like Sulfuric or Hydrochloric acid) for spill neutralization.
+
+---
+*Verified by CIMS Local Safety Engine*`;
+  }
+
+  // 3. Storage / Compatibility keywords
+  if (q.includes("compatibility") || q.includes("storage") || q.includes("group") || q.includes("where to store") || q.includes("store acid")) {
     return `### 🗃️ CIMS Chemical Storage Compatibility Guide
 
 Proper chemical storage prevents dangerous reactions. Standard chemical compatibility storage classes:
@@ -384,12 +422,23 @@ function getLocalCompatibility(chem1: string, chem2: string): CompatibilityResul
   };
 }
 
-export const geminiService = {
   async getSafetyAdvice(chemicalName: string, context: string = "") {
     try {
+      if (!ai) {
+        throw new Error("AI not configured. Using local safety engine.");
+      }
       const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: `You are a laboratory safety expert. Provide concise safety advice, hazard warnings, and storage compatibility information for the chemical: ${chemicalName}. ${context ? `Additional context: ${context}` : ""}. Focus on GHS hazards and PPE requirements.`,
+        contents: `You are a professional laboratory safety expert. Provide detailed, well-structured safety advice, hazard warnings, and storage compatibility details for the chemical or chemical query: "${chemicalName}".
+        
+        ${context ? `Additional context about the lab inventory item: ${context}` : ""}
+        
+        Structure your response clearly with these sections:
+        1. **GHS Classification & Primary Hazards**: (Identify warning levels, GHS pictograms description, and key danger statements).
+        2. **Safe Storage & Chemical Incompatibilities**: (Explicitly discuss segregation rules. Highlight compatibility issues, especially for acids: e.g. keeping organic acids like Acetic Acid separate from strong oxidizing mineral acids like Nitric Acid).
+        3. **Recommended PPE**: (Recommend proper protective equipment, including specific glove types like nitrile, neoprene, or butyl rubber, and fume hood requirements).
+        4. **Handling, Dilution, & Neutralization**: (Detail proper handling procedures. If an acid is mentioned, emphasize adding acid to water, and explain proper weak neutralizing agents like sodium bicarbonate).
+        5. **First Aid & Emergency Spill Procedures**: (Detail eye wash, skin contact, and spill absorption protocols).`,
       });
       // Append markdown tag indicating AI source
       return response.text + "\n\n---\n*Verified by Gemini AI*";
