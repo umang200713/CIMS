@@ -742,6 +742,7 @@ function getLocalCompatibility(chem1: string, chem2: string): CompatibilityResul
   };
 }
 
+export const geminiService = {
   async getSafetyAdvice(chemicalName: string, context: string = "") {
     try {
       if (!ai) {
