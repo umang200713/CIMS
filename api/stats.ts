@@ -34,11 +34,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    const { rows: total } = await query('SELECT COUNT(*) as count FROM chemicals');
-    const { rows: lowStock } = await query('SELECT COUNT(*) as count FROM inventory WHERE quantity < 100');
-    const { rows: expired } = await query(`SELECT COUNT(*) as count FROM inventory WHERE expiry_date::DATE < CURRENT_DATE`);
+    const { rows: total } = await query('SELECT COUNT(*)::INTEGER as count FROM chemicals');
+    const { rows: lowStock } = await query('SELECT COUNT(*)::INTEGER as count FROM inventory WHERE quantity < 100');
+    const { rows: expired } = await query(`SELECT COUNT(*)::INTEGER as count FROM inventory WHERE expiry_date::DATE < CURRENT_DATE`);
     const { rows: hazardDistribution } = await query(`
-      SELECT c.hazard_class as name, COUNT(*) as value
+      SELECT c.hazard_class as name, COUNT(*)::INTEGER as value
       FROM inventory i
       JOIN chemicals c ON i.chemical_id = c.id
       GROUP BY c.hazard_class
