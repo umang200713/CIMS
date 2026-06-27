@@ -1,22 +1,17 @@
-import pkg from 'pg';
-const { Pool } = pkg;
+import { neon } from '@neondatabase/serverless';
 
-let pool: InstanceType<typeof Pool> | null = null;
-
-export function getPool() {
-  if (!pool) {
-    if (!process.env.DATABASE_URL) {
-      throw new Error('DATABASE_URL environment variable is not set. Add it in Vercel project settings.');
-    }
-    pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false },
-      max: 5,
-    });
+const getDatabaseUrl = () => {
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    throw new Error('DATABASE_URL is not set. Go to Vercel Dashboard → Storage → Create a Neon Postgres database, then redeploy.');
   }
-  return pool;
-}
+  return url;
+};
 
 export async function query(text: string, values?: any[]) {
-  return getPool().query(text, values);
+  const sql = neon(getDatabaseUrl());
+  const rows = values && values.length > 0
+    ? await sql(text, values)
+    : await sql(text);
+  return { rows };
 }
