@@ -244,7 +244,8 @@ if (chemicalCount.count < 100) {
     ["Germanium Tetrachloride", "10038-98-9", "GeCl4", "Corrosive", "Acid Cabinet", 214.40, "Causes severe skin burns and eye damage.", "Store in a dry place.", s2],
     ["Arsenic Trioxide", "1327-53-3", "As2O3", "Toxic/Carcinogen", "Toxic Cabinet", 197.84, "Fatal if swallowed. May cause cancer.", "Store locked up.", s1],
     ["Selenium Dioxide", "7446-08-4", "SeO2", "Toxic", "Toxic Cabinet", 110.96, "Toxic if swallowed. Toxic if inhaled.", "Store locked up.", s2],
-    ["Tellurium Dioxide", "7446-07-3", "TeO2", "Toxic", "Toxic Cabinet", 159.60, "Harmful if swallowed. Suspected of damaging fertility.", "Store locked up.", s1]
+    ["Tellurium Dioxide", "7446-07-3", "TeO2", "Toxic", "Toxic Cabinet", 159.60, "Harmful if swallowed. Suspected of damaging fertility.", "Store locked up.", s1],
+    ["Water", "7732-18-5", "H2O", "None", "General Shelf", 18.02, "Not a hazardous substance.", "Store in a cool, dry place.", s1]
   ];
 
   for (const chem of chemicalsToSeed) {
