@@ -1,6 +1,11 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const apiKey = process.env.GEMINI_API_KEY;
+
+// Only initialize if key is present and not a placeholder
+const ai = (apiKey && apiKey !== "MY_GEMINI_API_KEY")
+  ? new GoogleGenAI({ apiKey })
+  : null;
 
 export interface HazardPrediction {
   potential_risks: string[];
@@ -16,6 +21,14 @@ export interface CompatibilityResult {
 
 export const aiService = {
   async predictHazards(chemicalName: string, formula: string, molecularWeight: number): Promise<HazardPrediction> {
+    if (!ai) {
+      return {
+        potential_risks: ["Gemini AI is not configured. Please set a valid GEMINI_API_KEY in your .env file."],
+        safety_precautions: ["Always consult the official Safety Data Sheet (SDS) for this chemical."],
+        emergency_measures: ["Contact your safety officer or emergency services if an incident occurs."]
+      };
+    }
+
     const prompt = `Analyze this chemical: 
       Name: ${chemicalName}
       Formula: ${formula}
@@ -24,7 +37,7 @@ export const aiService = {
       Predict potential lab hazards, safety precautions, and emergency measures.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         systemInstruction: "You are a professional chemical safety expert. Provide accurate, structured hazard analysis.",
@@ -57,10 +70,18 @@ export const aiService = {
   },
 
   async checkCompatibility(chem1: string, chem2: string): Promise<CompatibilityResult> {
+    if (!ai) {
+      return {
+        is_compatible: false,
+        warnings: "Gemini AI is not configured. Please set a valid GEMINI_API_KEY in your .env file to use AI compatibility checks.",
+        reaction_risk: "Cannot assess — AI service unavailable."
+      };
+    }
+
     const prompt = `Check if ${chem1} and ${chem2} are compatible for storage or mixture.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.5-flash",
       contents: prompt,
       config: {
         systemInstruction: "You are a laboratory safety advisor. Assess chemical compatibility strictly based on reactivity groups.",
