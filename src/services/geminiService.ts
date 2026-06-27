@@ -148,6 +148,22 @@ If a chemical spill occurs, follow these critical steps immediately:
       mw: 40.00
     },
     {
+      name: "Acetone",
+      formula: "CH3COCH3",
+      hc: "Flammable",
+      safety: "Highly flammable liquid and vapor. Causes serious eye irritation.",
+      storage: "Keep away from heat, sparks, open flames, hot surfaces.",
+      mw: 58.08
+    },
+    {
+      name: "Acetic Acid",
+      formula: "CH3COOH",
+      hc: "Corrosive",
+      safety: "Flammable liquid and vapor. Causes severe skin burns and eye damage.",
+      storage: "Keep away from heat, sparks, open flames. Store in a well-ventilated place.",
+      mw: 60.05
+    },
+    {
       name: "Nitric Acid",
       formula: "HNO3",
       hc: "Oxidizer/Corrosive",
@@ -164,6 +180,94 @@ If a chemical spill occurs, follow these critical steps immediately:
       mw: 98.08
     },
     {
+      name: "Methanol",
+      formula: "CH3OH",
+      hc: "Flammable/Toxic",
+      safety: "Highly flammable liquid and vapor. Toxic if swallowed.",
+      storage: "Store in a well-ventilated place. Keep cool. Store locked up.",
+      mw: 32.04
+    },
+    {
+      name: "Isopropanol",
+      formula: "C3H8O",
+      hc: "Flammable",
+      safety: "Highly flammable liquid and vapor. Causes serious eye irritation.",
+      storage: "Keep container tightly closed. Store in a well-ventilated place.",
+      mw: 60.10
+    },
+    {
+      name: "Hexane",
+      formula: "C6H14",
+      hc: "Flammable",
+      safety: "Highly flammable liquid and vapor. May be fatal if swallowed.",
+      storage: "Store in a well-ventilated place. Keep cool.",
+      mw: 86.18
+    },
+    {
+      name: "Toluene",
+      formula: "C7H8",
+      hc: "Flammable",
+      safety: "Highly flammable liquid and vapor. Suspected of damaging fertility.",
+      storage: "Keep away from heat. Store in a well-ventilated place.",
+      mw: 92.14
+    },
+    {
+      name: "Dichloromethane",
+      formula: "CH2Cl2",
+      hc: "Toxic",
+      safety: "Harmful if swallowed. Causes skin irritation. Suspected of causing cancer.",
+      storage: "Store in a well-ventilated place. Keep container tightly closed.",
+      mw: 84.93
+    },
+    {
+      name: "Chloroform",
+      formula: "CHCl3",
+      hc: "Toxic",
+      safety: "Harmful if swallowed. Causes skin irritation. Suspected of causing cancer.",
+      storage: "Store in a well-ventilated place. Keep container tightly closed.",
+      mw: 119.38
+    },
+    {
+      name: "Tetrahydrofuran",
+      formula: "C4H8O",
+      hc: "Flammable",
+      safety: "Highly flammable liquid and vapor. Causes serious eye irritation.",
+      storage: "Keep away from heat. Store in a well-ventilated place.",
+      mw: 72.11
+    },
+    {
+      name: "Ethyl Acetate",
+      formula: "C4H8O2",
+      hc: "Flammable",
+      safety: "Highly flammable liquid and vapor. Causes serious eye irritation.",
+      storage: "Keep container tightly closed. Store in a well-ventilated place.",
+      mw: 88.11
+    },
+    {
+      name: "Ammonia Solution",
+      formula: "NH4OH",
+      hc: "Corrosive",
+      safety: "Causes severe skin burns and eye damage. Very toxic to aquatic life.",
+      storage: "Store locked up. Store in a well-ventilated place.",
+      mw: 35.05
+    },
+    {
+      name: "Phosphoric Acid",
+      formula: "H3PO4",
+      hc: "Corrosive",
+      safety: "May be corrosive to metals. Causes severe skin burns and eye damage.",
+      storage: "Store in corrosive resistant container.",
+      mw: 98.00
+    },
+    {
+      name: "Potassium Hydroxide",
+      formula: "KOH",
+      hc: "Corrosive",
+      safety: "Harmful if swallowed. Causes severe skin burns and eye damage.",
+      storage: "Store only in original container.",
+      mw: 56.11
+    },
+    {
       name: "Hydrogen Peroxide (30%)",
       formula: "H2O2",
       hc: "Oxidizer/Corrosive",
@@ -172,20 +276,236 @@ If a chemical spill occurs, follow these critical steps immediately:
       mw: 34.01
     },
     {
-      name: "Sodium Azide",
-      formula: "NaN3",
-      hc: "Toxic",
-      safety: "Fatal if swallowed. Fatal in contact with skin. Very toxic to aquatic life.",
-      storage: "Store locked up.",
-      mw: 65.01
+      name: "Sodium Carbonate",
+      formula: "Na2CO3",
+      hc: "Irritant",
+      safety: "Causes serious eye irritation.",
+      storage: "Keep container tightly closed.",
+      mw: 105.99
     },
     {
-      name: "Lithium Aluminum Hydride",
-      formula: "LiAlH4",
-      hc: "Flammable/Reactive",
-      safety: "In contact with water releases flammable gases which may ignite spontaneously.",
-      storage: "Keep away from water. Store under inert gas.",
-      mw: 37.95
+      name: "Sodium Bicarbonate",
+      formula: "NaHCO3",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 84.01
+    },
+    {
+      name: "Calcium Chloride",
+      formula: "CaCl2",
+      hc: "Irritant",
+      safety: "Causes serious eye irritation.",
+      storage: "Keep container tightly closed.",
+      mw: 110.98
+    },
+    {
+      name: "Magnesium Sulfate",
+      formula: "MgSO4",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 120.37
+    },
+    {
+      name: "Potassium Permanganate",
+      formula: "KMnO4",
+      hc: "Oxidizer",
+      safety: "May intensify fire; oxidizer. Harmful if swallowed.",
+      storage: "Keep away from heat. Store locked up.",
+      mw: 158.03
+    },
+    {
+      name: "Silver Nitrate",
+      formula: "AgNO3",
+      hc: "Oxidizer/Corrosive",
+      safety: "May intensify fire; oxidizer. Causes severe skin burns.",
+      storage: "Keep away from heat. Store locked up.",
+      mw: 169.87
+    },
+    {
+      name: "Iodine",
+      formula: "I2",
+      hc: "Toxic/Corrosive",
+      safety: "Harmful if swallowed. Causes skin irritation. Very toxic to aquatic life.",
+      storage: "Store in a well-ventilated place. Keep cool.",
+      mw: 253.81
+    },
+    {
+      name: "Phenolphthalein",
+      formula: "C20H14O4",
+      hc: "None",
+      safety: "Suspected of causing genetic defects. Suspected of causing cancer.",
+      storage: "Store locked up.",
+      mw: 318.32
+    },
+    {
+      name: "Methyl Orange",
+      formula: "C14H14N3NaO3S",
+      hc: "Toxic",
+      safety: "Toxic if swallowed.",
+      storage: "Store locked up.",
+      mw: 327.33
+    },
+    {
+      name: "Bromothymol Blue",
+      formula: "C27H28Br2O5S",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 624.38
+    },
+    {
+      name: "Citric Acid",
+      formula: "C6H8O7",
+      hc: "Irritant",
+      safety: "Causes serious eye irritation.",
+      storage: "Keep container tightly closed.",
+      mw: 192.12
+    },
+    {
+      name: "Oxalic Acid",
+      formula: "C2H2O4",
+      hc: "Toxic/Corrosive",
+      safety: "Harmful if swallowed. Causes severe skin burns and eye damage.",
+      storage: "Store locked up.",
+      mw: 90.03
+    },
+    {
+      name: "Barium Chloride",
+      formula: "BaCl2",
+      hc: "Toxic",
+      safety: "Toxic if swallowed. Harmful if inhaled.",
+      storage: "Store locked up.",
+      mw: 208.23
+    },
+    {
+      name: "Copper(II) Sulfate",
+      formula: "CuSO4",
+      hc: "Toxic",
+      safety: "Harmful if swallowed. Causes skin irritation. Very toxic to aquatic life.",
+      storage: "Store in a well-ventilated place.",
+      mw: 159.61
+    },
+    {
+      name: "Iron(III) Chloride",
+      formula: "FeCl3",
+      hc: "Corrosive",
+      safety: "Harmful if swallowed. Causes skin irritation. Causes serious eye damage.",
+      storage: "Store in corrosive resistant container.",
+      mw: 162.20
+    },
+    {
+      name: "Zinc Sulfate",
+      formula: "ZnSO4",
+      hc: "Toxic",
+      safety: "Harmful if swallowed. Causes serious eye damage. Very toxic to aquatic life.",
+      storage: "Store in a well-ventilated place.",
+      mw: 161.47
+    },
+    {
+      name: "Formaldehyde (37%)",
+      formula: "CH2O",
+      hc: "Toxic/Carcinogen",
+      safety: "Toxic if swallowed. Causes severe skin burns. May cause cancer.",
+      storage: "Store locked up.",
+      mw: 30.03
+    },
+    {
+      name: "Acetonitrile",
+      formula: "CH3CN",
+      hc: "Flammable/Toxic",
+      safety: "Highly flammable liquid and vapor. Harmful if swallowed.",
+      storage: "Store in a well-ventilated place.",
+      mw: 41.05
+    },
+    {
+      name: "Dimethyl Sulfoxide",
+      formula: "C2H6OS",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 78.13
+    },
+    {
+      name: "Pyridine",
+      formula: "C5H5N",
+      hc: "Flammable/Toxic",
+      safety: "Highly flammable liquid and vapor. Harmful if swallowed.",
+      storage: "Store in a well-ventilated place.",
+      mw: 79.10
+    },
+    {
+      name: "Potassium Carbonate",
+      formula: "K2CO3",
+      hc: "Irritant",
+      safety: "Causes skin irritation. Causes serious eye irritation.",
+      storage: "Store in a dry place.",
+      mw: 138.21
+    },
+    {
+      name: "Ammonium Chloride",
+      formula: "NH4Cl",
+      hc: "Irritant",
+      safety: "Harmful if swallowed. Causes serious eye irritation.",
+      storage: "Keep container tightly closed.",
+      mw: 53.49
+    },
+    {
+      name: "Calcium Carbonate",
+      formula: "CaCO3",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 100.09
+    },
+    {
+      name: "Sodium Sulfate",
+      formula: "Na2SO4",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 142.04
+    },
+    {
+      name: "Potassium Nitrate",
+      formula: "KNO3",
+      hc: "Oxidizer",
+      safety: "May intensify fire; oxidizer.",
+      storage: "Keep away from heat.",
+      mw: 101.10
+    },
+    {
+      name: "Potassium Iodide",
+      formula: "KI",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 166.00
+    },
+    {
+      name: "Sodium Iodide",
+      formula: "NaI",
+      hc: "None",
+      safety: "Not a hazardous substance.",
+      storage: "Store in a cool, dry place.",
+      mw: 149.89
+    },
+    {
+      name: "Arsenic Trioxide",
+      formula: "As2O3",
+      hc: "Toxic/Carcinogen",
+      safety: "Fatal if swallowed. May cause cancer.",
+      storage: "Store locked up.",
+      mw: 197.84
+    },
+    {
+      name: "Selenium Dioxide",
+      formula: "SeO2",
+      hc: "Toxic",
+      safety: "Toxic if swallowed. Toxic if inhaled.",
+      storage: "Store locked up.",
+      mw: 110.96
     }
   ];
 
