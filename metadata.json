@@ -1,0 +1,5 @@
+{
+  "name": "ChemTrace CIMS",
+  "description": "A comprehensive Chemical Inventory Management System for laboratories, tracking safety, compliance, and stock levels.",
+  "requestFramePermissions": ["camera"]
+}

@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
+
+/* Global utility for smooth, fluid theme transition across background colors and borders */
+.theme-transition, .theme-transition * {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              fill 0.3s cubic-[#4f46e5], 
+              box-shadow 0.35s ease;
+}
+
+/* 1. Acid Green Theme: Inspired by laboratory acids, chemical solutions, and fluorescein dyes */
+.theme-acid-green {
+  --color-blue-50: #f0fdf4;
+  --color-blue-100: #dcfce7;
+  --color-blue-200: #bbf7d0;
+  --color-blue-500: #22c55e;
+  --color-blue-600: #16a34a;
+  --color-blue-700: #15803d;
+  --color-blue-800: #166534;
+  --color-blue-900: #14532d;
+  --color-blue-950: #052e16;
+
+  --color-indigo-50: #f0fdf4;
+  --color-indigo-100: #dcfce7;
+  --color-indigo-600: #16a34a;
+  --color-indigo-950: #052e16;
+}
+
+/* 2. Copper Sulfate Blue Theme: Deep azulene, cobalt, and bright crystalline aqua */
+.theme-copper-blue {
+  --color-blue-50: #f0f7ff;
+  --color-blue-100: #e0f2fe;
+  --color-blue-200: #bae6fd;
+  --color-blue-500: #0284c7;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+
+  --color-indigo-50: #f0f7ff;
+  --color-indigo-100: #e0f2fe;
+  --color-indigo-600: #2563eb;
+  --color-indigo-950: #172554;
+}
+
+/* 3. Potassium Permanganate Purple Theme: Mysterious, deep oxidation-inspired violet-magenta solution */
+.theme-potassium-purple {
+  --color-blue-50: #faf5ff;
+  --color-blue-100: #f3e8ff;
+  --color-blue-200: #e9d5ff;
+  --color-blue-500: #a855f7;
+  --color-blue-600: #8b5cf6;
+  --color-blue-700: #7c3aed;
+  --color-blue-800: #6d28d9;
+  --color-blue-900: #581c87;
+  --color-blue-950: #3b0764;
+
+  --color-indigo-50: #faf5ff;
+  --color-indigo-100: #f3e8ff;
+  --color-indigo-600: #8b5cf6;
+  --color-indigo-950: #3b0764;
+}
+
+/* 4. Sulfur Yellow Theme: Bright element sulfur powder and laboratory minerals */
+.theme-sulfur-yellow {
+  --color-blue-50: #fffbeb;
+  --color-blue-100: #fef3c7;
+  --color-blue-200: #fde68a;
+  --color-blue-500: #f59e0b;
+  --color-blue-600: #d97706;
+  --color-blue-700: #b45309;
+  --color-blue-800: #92400e;
+  --color-blue-900: #78350f;
+  --color-blue-950: #451a03;
+
+  --color-indigo-50: #fffbeb;
+  --color-indigo-100: #fef3c7;
+  --color-indigo-600: #d97706;
+  --color-indigo-950: #451a03;
+}
+
+/* 5. Safety Orange Theme: High-safety compliance badges, hazard containment signs, biohazard caution */
+.theme-safety-orange {
+  --color-blue-50: #fff7ed;
+  --color-blue-100: #ffedd5;
+  --color-blue-200: #fed7aa;
+  --color-blue-500: #f97316;
+  --color-blue-600: #ea580c;
+  --color-blue-700: #c2410c;
+  --color-blue-800: #9a3412;
+  --color-blue-900: #7c2d12;
+  --color-blue-950: #431407;
+
+  --color-indigo-50: #fff7ed;
+  --color-indigo-100: #ffedd5;
+  --color-indigo-600: #ea580c;
+  --color-indigo-950: #431407;
+}
+
+/* 6. Laboratory Dark Theme: Premium midnight canvas, responsive neon-laser indicators */
+.theme-lab-dark {
+  --color-white: #111827;
+  --color-slate-50: #080c14;
+  --color-slate-100: #111827;
+  --color-slate-200: #1f2937;
+  --color-slate-500: #9ca3af;
+  --color-slate-900: #f3f4f6;
+
+  --color-blue-50: #064e3b;
+  --color-blue-100: #065f46;
+  --color-blue-200: #047857;
+  --color-blue-500: #34d399;
+  --color-blue-600: #10b981;
+  --color-blue-700: #059669;
+  --color-blue-800: #047857;
+  --color-blue-900: #064e3b;
+  --color-blue-950: #022c22;
+
+  --color-indigo-50: #1e1b4b;
+  --color-indigo-100: #312e81;
+  --color-indigo-600: #6366f1;
+  --color-indigo-950: #0f172a;
+}
+
+/* Explicit style overrides that cannot be solved purely on variables in Laboratory Dark Theme */
+.theme-lab-dark .bg-white {
+  background-color: #111827 !important;
+  color: #f3f4f6;
+  border-color: #1f2937;
+}
+
+.theme-lab-dark .text-slate-900 {
+  color: #f9fafb !important;
+}
+
+.theme-lab-dark .text-slate-800 {
+  color: #f3f4f6 !important;
+}
+
+.theme-lab-dark .text-slate-700 {
+  color: #e5e7eb !important;
+}
+
+.theme-lab-dark .text-slate-600 {
+  color: #d1d5db !important;
+}
+
+.theme-lab-dark .text-slate-500 {
+  color: #9ca3af !important;
+}
+
+.theme-lab-dark .text-slate-400 {
+  color: #6b7280 !important;
+}
+
+.theme-lab-dark .bg-slate-50 {
+  background-color: #0c121e !important;
+}
+
+.theme-lab-dark .border-slate-100 {
+  border-color: #1f2937 !important;
+}
+
+.theme-lab-dark .border-slate-200 {
+  border-color: #1f2937 !important;
+}
+
+.theme-lab-dark tr:hover {
+  background-color: #1e293b !important;
+}
+
+.theme-lab-dark input, 
+.theme-lab-dark select, 
+.theme-lab-dark textarea {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+  border-color: #374151 !important;
+}
+
+.theme-lab-dark .bg-blue-50\/10 {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+}
+
+.theme-lab-dark .bg-slate-100 {
+  background-color: #111827 !important;
+}
+
+.theme-lab-dark .bg-blue-50 {
+  background-color: #064e3b !important;
+  color: #34d399;
+}
+
+.theme-lab-dark .text-blue-700 {
+  color: #34d399 !important;
+}
+
+.theme-lab-dark .bg-blue-100 {
+  background-color: #065f46 !important;
+}
+
+.theme-lab-dark .text-blue-600 {
+  color: #10b981 !important;
+}
+
+/* 7. Bismuth Iridescent Theme: Multi-gradient metallic colors shifting fuchsia, purple, and cyan */
+.theme-bismuth {
+  --color-blue-50: #fdf4ff;
+  --color-blue-100: #fae8ff;
+  --color-blue-200: #f5d0fe;
+  --color-blue-500: #d946ef;
+  --color-blue-600: #a855f7;
+  --color-blue-700: #8b5cf6;
+  --color-blue-800: #701a75;
+  --color-blue-900: #4a044e;
+  --color-blue-950: #2e0230;
+
+  --color-indigo-50: #fdf4ff;
+  --color-indigo-100: #fae8ff;
+  --color-indigo-600: #a855f7;
+  --color-indigo-950: #2e0230;
+}
+.theme-bismuth .bg-white {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-color: rgba(240, 190, 250, 0.4) !important;
+}
+
+/* 8. Cryogenic Frost Theme: Frozen layout, icy-cyan neon highlights */
+.theme-cryo {
+  --color-blue-50: #f0fdfa;
+  --color-blue-100: #ccfbf1;
+  --color-blue-200: #99f6e4;
+  --color-blue-500: #0d9488;
+  --color-blue-600: #06b6d4;
+  --color-blue-700: #0891b2;
+  --color-blue-800: #0369a1;
+  --color-blue-900: #075985;
+  --color-blue-950: #082f49;
+
+  --color-indigo-50: #f0fdfa;
+  --color-indigo-100: #ccfbf1;
+  --color-indigo-600: #06b6d4;
+  --color-indigo-950: #082f49;
+}
+.theme-cryo .bg-white {
+  background-color: #fcfdfe !important;
+  border-color: #e0f2fe !important;
+  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.05) !important;
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #cbd5e1;
+  }
+}
+
