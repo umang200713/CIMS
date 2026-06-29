@@ -16,8 +16,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       SELECT i.id, c.name, i.expiry_date
       FROM inventory i
       JOIN chemicals c ON i.chemical_id = c.id
-      WHERE i.expiry_date::DATE <= CURRENT_DATE + INTERVAL '30 days'
-        AND i.expiry_date::DATE >= CURRENT_DATE
+      WHERE i.expiry_date <= (CURRENT_DATE + INTERVAL '30 days')::TEXT
+        AND i.expiry_date >= CURRENT_DATE::TEXT
+        AND i.expiry_date != ''
+        AND i.expiry_date IS NOT NULL
         AND i.status = 'active'
     `);
 
@@ -35,8 +37,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const { rows: total } = await query('SELECT COUNT(*)::INTEGER as count FROM chemicals');
-    const { rows: lowStock } = await query('SELECT COUNT(*)::INTEGER as count FROM inventory WHERE quantity < 100 AND (expiry_date::DATE >= CURRENT_DATE OR expiry_date IS NULL)');
-    const { rows: expired } = await query(`SELECT COUNT(*)::INTEGER as count FROM inventory WHERE expiry_date::DATE < CURRENT_DATE`);
+    const { rows: lowStock } = await query("SELECT COUNT(*)::INTEGER as count FROM inventory WHERE quantity < 100 AND (expiry_date >= CURRENT_DATE::TEXT OR expiry_date IS NULL OR expiry_date = '')");
+    const { rows: expired } = await query("SELECT COUNT(*)::INTEGER as count FROM inventory WHERE expiry_date < CURRENT_DATE::TEXT AND expiry_date != '' AND expiry_date IS NOT NULL");
     const { rows: hazardDistribution } = await query(`
       SELECT c.hazard_class as name, COUNT(*)::INTEGER as value
       FROM inventory i

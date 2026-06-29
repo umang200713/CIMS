@@ -475,7 +475,7 @@ async function startServer() {
     }
 
     const totalChemicals = db.prepare("SELECT COUNT(*) as count FROM chemicals").get();
-    const lowStock = db.prepare("SELECT COUNT(*) as count FROM inventory WHERE quantity < 100").get();
+    const lowStock = db.prepare("SELECT COUNT(*) as count FROM inventory WHERE quantity < 100 AND (expiry_date >= date('now') OR expiry_date IS NULL OR expiry_date = '')").get();
     const expired = db.prepare("SELECT COUNT(*) as count FROM inventory WHERE expiry_date < date('now')").get();
     const hazardDistribution = db.prepare(`
       SELECT c.hazard_class as name, COUNT(*) as value 
