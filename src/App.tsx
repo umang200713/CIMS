@@ -1394,13 +1394,15 @@ export default function App() {
             <Search className="w-4 h-4" />
             Scan Barcode
           </button>
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200"
-          >
-            <Plus className="w-4 h-4" />
-            Add Inventory
-          </button>
+          {currentUser?.role === "admin" && (
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200"
+            >
+              <Plus className="w-4 h-4" />
+              Add Inventory
+            </button>
+          )}
         </div>
       </div>
 
