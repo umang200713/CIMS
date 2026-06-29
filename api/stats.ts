@@ -35,7 +35,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const { rows: total } = await query('SELECT COUNT(*)::INTEGER as count FROM chemicals');
-    const { rows: lowStock } = await query('SELECT COUNT(*)::INTEGER as count FROM inventory WHERE quantity < 100');
+    const { rows: lowStock } = await query('SELECT COUNT(*)::INTEGER as count FROM inventory WHERE quantity < 100 AND (expiry_date::DATE >= CURRENT_DATE OR expiry_date IS NULL)');
     const { rows: expired } = await query(`SELECT COUNT(*)::INTEGER as count FROM inventory WHERE expiry_date::DATE < CURRENT_DATE`);
     const { rows: hazardDistribution } = await query(`
       SELECT c.hazard_class as name, COUNT(*)::INTEGER as value
