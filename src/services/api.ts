@@ -121,4 +121,22 @@ export const api = {
     });
     return res.json();
   },
+
+  async addChemical(chemical: Partial<Chemical>): Promise<{ id: number }> {
+    const res = await fetch("/api/chemicals", {
+      method: "POST",
+      headers: getHeaders(),
+      body: JSON.stringify(chemical),
+    });
+    return res.json();
+  },
+
+  async updateChemical(id: number, chemical: Partial<Chemical>): Promise<any> {
+    const res = await fetch(`/api/chemicals/${id}`, {
+      method: "PATCH",
+      headers: getHeaders(),
+      body: JSON.stringify(chemical),
+    });
+    return res.json();
+  },
 };

@@ -16,6 +16,7 @@ import {
   ChevronRight, 
   ShieldAlert, 
   Info, 
+  Edit,
   Package, 
   MapPin, 
   Calendar, 
@@ -64,6 +65,7 @@ import SupplierModal from "./components/SupplierModal";
 import AICompatibilityModal from "./components/AICompatibilityModal";
 import AISafetyModal from "./components/AISafetyModal";
 import Reports from "./components/Reports";
+import ChemicalModal from "./components/ChemicalModal";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -184,6 +186,10 @@ export default function App() {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
+  const [isChemicalModalOpen, setIsChemicalModalOpen] = useState(false);
+  const [selectedChemical, setSelectedChemical] = useState<Chemical | null>(null);
+  const [selectedPhysicalState, setSelectedPhysicalState] = useState<string>("");
+  const [selectedUnit, setSelectedUnit] = useState<string>("");
   const [isCompatibilityModalOpen, setIsCompatibilityModalOpen] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isAISafetyModalOpen, setIsAISafetyModalOpen] = useState(false);
@@ -438,11 +444,15 @@ export default function App() {
     };
   };
 
-  const filteredInventory = inventory.filter(item => 
-    item.chemical_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.cas_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.location.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredInventory = inventory.filter(item => {
+    const matchesSearch = 
+      (item.chemical_name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.cas_number || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.location || "").toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesState = selectedPhysicalState ? item.physical_state === selectedPhysicalState : true;
+    const matchesUnit = selectedUnit ? item.unit === selectedUnit : true;
+    return matchesSearch && matchesState && matchesUnit;
+  });
 
   const handleOpenContainer = async (id: number) => {
     try {
@@ -1062,41 +1072,100 @@ export default function App() {
     );
   };
 
-  const renderDashboard = () => (
-    <div className="space-y-6 animate-in fade-in duration-500">
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <StatCard 
-          title="Total Chemicals" 
-          value={stats?.totalChemicals.count || 0} 
-          icon={<Database className="w-5 h-5" />} 
-          color="blue" 
-        />
-        <StatCard 
-          title="Low Stock" 
-          value={stats?.lowStock.count || 0} 
-          icon={<AlertTriangle className="w-5 h-5" />} 
-          color="orange" 
-        />
-        <StatCard 
-          title="Expired Items" 
-          value={stats?.expired.count || 0} 
-          icon={<XCircle className="w-5 h-5" />} 
-          color="red" 
-        />
-        <StatCard 
-          title="Active Inventory" 
-          value={inventory.length} 
-          icon={<Package className="w-5 h-5" />} 
-          color="emerald" 
-        />
-        <StatCard 
-          title="Disposed" 
-          value={transactions.filter(t => t.type === "disposal").length} 
-          icon={<Trash2 className="w-5 h-5" />} 
-          color="red" 
-        />
-      </div>
+  const renderDashboard = () => {
+    const totalChems = chemicals.length;
+    const solidChems = chemicals.filter(c => c.physical_state === "Solid" || !c.physical_state).length;
+    const liquidChems = chemicals.filter(c => c.physical_state === "Liquid").length;
+    const gasChems = chemicals.filter(c => c.physical_state === "Gas").length;
+    const powderChems = chemicals.filter(c => c.physical_state === "Powder").length;
+    const crystalChems = chemicals.filter(c => c.physical_state === "Crystal").length;
+    const gelChems = chemicals.filter(c => c.physical_state === "Gel").length;
+
+    return (
+      <div className="space-y-6 animate-in fade-in duration-500">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <StatCard 
+            title="Total Chemicals" 
+            value={stats?.totalChemicals.count || 0} 
+            icon={<Database className="w-5 h-5" />} 
+            color="blue" 
+          />
+          <StatCard 
+            title="Low Stock" 
+            value={stats?.lowStock.count || 0} 
+            icon={<AlertTriangle className="w-5 h-5" />} 
+            color="orange" 
+          />
+          <StatCard 
+            title="Expired Items" 
+            value={stats?.expired.count || 0} 
+            icon={<XCircle className="w-5 h-5" />} 
+            color="red" 
+          />
+          <StatCard 
+            title="Active Inventory" 
+            value={inventory.length} 
+            icon={<Package className="w-5 h-5" />} 
+            color="emerald" 
+          />
+          <StatCard 
+            title="Disposed" 
+            value={transactions.filter(t => t.type === "disposal").length} 
+            icon={<Trash2 className="w-5 h-5" />} 
+            color="red" 
+          />
+        </div>
+
+        {/* Physical State Distribution Grid */}
+        <div className="bg-slate-50/50 p-5 rounded-3xl border border-slate-100/70 space-y-3">
+          <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Chemical States Directory</h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+            <StatCard 
+              title="Total Chemicals" 
+              value={totalChems} 
+              icon={<Database className="w-5 h-5" />} 
+              color="blue" 
+            />
+            <StatCard 
+              title="Liquid" 
+              value={liquidChems} 
+              icon={<Beaker className="w-5 h-5" />} 
+              color="blue" 
+            />
+            <StatCard 
+              title="Solid" 
+              value={solidChems} 
+              icon={<Package className="w-5 h-5" />} 
+              color="slate" 
+            />
+            <StatCard 
+              title="Powder" 
+              value={powderChems} 
+              icon={<ClipboardList className="w-5 h-5" />} 
+              color="orange" 
+            />
+            <StatCard 
+              title="Crystal" 
+              value={crystalChems} 
+              icon={<Sparkles className="w-5 h-5" />} 
+              color="purple" 
+            />
+            <StatCard 
+              title="Gas" 
+              value={gasChems} 
+              icon={<Atom className="w-5 h-5" />} 
+              color="emerald" 
+            />
+            <StatCard 
+              title="Gel" 
+              value={gelChems} 
+              icon={<Paintbrush className="w-5 h-5" />} 
+              color="pink" 
+            />
+          </div>
+        </div>
+
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -1355,29 +1424,61 @@ export default function App() {
       </div>
     </div>
   );
+  };
 
   const renderInventory = () => (
     <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input 
-            type="text" 
-            placeholder="Search by name, CAS, or location..." 
-            className="w-full pl-10 pr-12 py-2 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button 
-            onClick={startVoiceSearch}
-            className={cn(
-              "absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg transition-all",
-              isListening ? "bg-red-50 text-red-500 animate-pulse" : "text-slate-400 hover:text-blue-500 hover:bg-slate-100"
-            )}
-            title="Search by voice"
-          >
-            <Mic className="w-4 h-4" />
-          </button>
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 flex-1 max-w-2xl">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder="Search by name, CAS, or location..." 
+              className="w-full pl-10 pr-12 py-2 bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-sm"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button 
+              onClick={startVoiceSearch}
+              className={cn(
+                "absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg transition-all",
+                isListening ? "bg-red-50 text-red-500 animate-pulse" : "text-slate-400 hover:text-blue-500 hover:bg-slate-100"
+              )}
+              title="Search by voice"
+            >
+              <Mic className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="flex gap-2">
+            <select
+              className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all cursor-pointer"
+              value={selectedPhysicalState}
+              onChange={(e) => setSelectedPhysicalState(e.target.value)}
+            >
+              <option value="">All States</option>
+              <option value="Solid">Solid</option>
+              <option value="Liquid">Liquid</option>
+              <option value="Gas">Gas</option>
+              <option value="Powder">Powder</option>
+              <option value="Crystal">Crystal</option>
+              <option value="Gel">Gel</option>
+            </select>
+
+            <select
+              className="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all cursor-pointer"
+              value={selectedUnit}
+              onChange={(e) => setSelectedUnit(e.target.value)}
+            >
+              <option value="">All Units</option>
+              <option value="mL">mL</option>
+              <option value="L">L</option>
+              <option value="g">g</option>
+              <option value="kg">kg</option>
+              <option value="mg">mg</option>
+              <option value="Cylinders">Cylinders</option>
+            </select>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <button 
@@ -1464,6 +1565,18 @@ export default function App() {
                   </div>
                   <p className="text-xs text-slate-500 font-mono">{item.cas_number}</p>
                 <div className="flex flex-wrap gap-1 mt-2">
+                  <span className={cn(
+                    "inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px] font-black uppercase border",
+                    item.physical_state === "Liquid" ? "bg-blue-50 text-blue-700 border-blue-100" :
+                    item.physical_state === "Solid" ? "bg-slate-100 text-slate-700 border-slate-200" :
+                    item.physical_state === "Powder" ? "bg-orange-50 text-orange-700 border-orange-100" :
+                    item.physical_state === "Crystal" ? "bg-purple-50 text-purple-700 border-purple-100" :
+                    item.physical_state === "Gas" ? "bg-emerald-50 text-emerald-700 border-emerald-100" :
+                    item.physical_state === "Gel" ? "bg-pink-50 text-pink-700 border-pink-100" :
+                    "bg-slate-100 text-slate-700 border-slate-200"
+                  )}>
+                    {item.physical_state || "Solid"}
+                  </span>
                   <button 
                     onClick={() => {
                       setSelectedSafetyItem(item);
@@ -1565,7 +1678,10 @@ export default function App() {
 
       <UsageModal 
         isOpen={isUsageModalOpen}
-        onClose={() => setIsUsageModalOpen(false)}
+        onClose={() => {
+          setIsUsageModalOpen(false);
+          setSelectedUsageItem(null);
+        }}
         item={selectedUsageItem}
         onSuccess={fetchData}
         currentUser={currentUser?.username || "Unknown"}
@@ -1573,7 +1689,10 @@ export default function App() {
 
       <DisposalModal 
         isOpen={isDisposalModalOpen}
-        onClose={() => setIsDisposalModalOpen(false)}
+        onClose={() => {
+          setIsDisposalModalOpen(false);
+          setSelectedDisposalItem(null);
+        }}
         item={selectedDisposalItem}
         onSuccess={fetchData}
         currentUser={currentUser?.username || "Unknown"}
@@ -1670,18 +1789,32 @@ export default function App() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        {currentUser?.role === "admin" && (
-          <button 
-            onClick={() => {
-              setSelectedSupplier(null);
-              setIsSupplierModalOpen(true);
-            }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-all shadow-sm"
-          >
-            <Plus className="w-4 h-4" />
-            Add Supplier
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {currentUser?.role === "admin" && (
+            <button 
+              onClick={() => {
+                setSelectedChemical(null);
+                setIsChemicalModalOpen(true);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-all shadow-sm"
+            >
+              <Plus className="w-4 h-4" />
+              Add Chemical
+            </button>
+          )}
+          {currentUser?.role === "admin" && (
+            <button 
+              onClick={() => {
+                setSelectedSupplier(null);
+                setIsSupplierModalOpen(true);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl hover:bg-slate-50 transition-all shadow-sm"
+            >
+              <Plus className="w-4 h-4" />
+              Add Supplier
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -1695,17 +1828,33 @@ export default function App() {
               <thead className="bg-slate-50 text-slate-500 text-[10px] uppercase tracking-widest font-bold">
                 <tr>
                   <th className="px-6 py-4">Chemical</th>
+                  <th className="px-6 py-4">State</th>
                   <th className="px-6 py-4">Supplier</th>
                   <th className="px-6 py-4">Hazard</th>
                   <th className="px-6 py-4">Formula</th>
+                  {currentUser?.role === "admin" && <th className="px-6 py-4 text-right">Actions</th>}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50">
-                {chemicals.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()) || c.cas_number.includes(searchQuery)).map(chem => (
+                {chemicals.filter(c => (c.name || "").toLowerCase().includes(searchQuery.toLowerCase()) || (c.cas_number || "").includes(searchQuery)).map(chem => (
                   <tr key={chem.id} className="hover:bg-slate-50/50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="font-bold text-slate-900">{chem.name}</div>
                       <div className="text-xs text-slate-400 font-mono">{chem.cas_number}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={cn(
+                        "inline-flex px-2 py-0.5 rounded-lg border text-[10px] font-bold uppercase tracking-wider",
+                        chem.physical_state === "Liquid" ? "bg-blue-50 text-blue-700 border-blue-100" :
+                        chem.physical_state === "Solid" ? "bg-slate-100 text-slate-700 border-slate-200" :
+                        chem.physical_state === "Powder" ? "bg-orange-50 text-orange-700 border-orange-100" :
+                        chem.physical_state === "Crystal" ? "bg-purple-50 text-purple-700 border-purple-100" :
+                        chem.physical_state === "Gas" ? "bg-emerald-50 text-emerald-700 border-emerald-100" :
+                        chem.physical_state === "Gel" ? "bg-pink-50 text-pink-700 border-pink-100" :
+                        "bg-slate-100 text-slate-700 border-slate-200"
+                      )}>
+                        {chem.physical_state || "Solid"}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-slate-600">{chem.supplier_name || "N/A"}</span>
@@ -1718,6 +1867,20 @@ export default function App() {
                     <td className="px-6 py-4">
                       <span className="text-xs font-mono text-slate-500">{chem.formula}</span>
                     </td>
+                    {currentUser?.role === "admin" && (
+                      <td className="px-6 py-4 text-right">
+                        <button 
+                          onClick={() => {
+                            setSelectedChemical(chem);
+                            setIsChemicalModalOpen(true);
+                          }}
+                          className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all"
+                          title="Edit Chemical"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
@@ -2240,6 +2403,17 @@ export default function App() {
         onSuccess={fetchData}
         supplier={selectedSupplier}
       />
+
+      <ChemicalModal
+        isOpen={isChemicalModalOpen}
+        onClose={() => {
+          setIsChemicalModalOpen(false);
+          setSelectedChemical(null);
+        }}
+        onSuccess={fetchData}
+        chemical={selectedChemical}
+        suppliers={suppliers}
+      />
     </div>
   );
 }
@@ -2276,12 +2450,15 @@ function MobileNavItem({ label, active, onClick }: { label: string, active: bool
   );
 }
 
-function StatCard({ title, value, icon, color }: { title: string, value: string | number, icon: React.ReactNode, color: "blue" | "orange" | "red" | "emerald" }) {
+function StatCard({ title, value, icon, color }: { title: string, value: string | number, icon: React.ReactNode, color: "blue" | "orange" | "red" | "emerald" | "slate" | "purple" | "pink" }) {
   const colors = {
     blue: "bg-blue-50 text-blue-600 border-blue-100",
     orange: "bg-orange-50 text-orange-600 border-orange-100",
     red: "bg-red-50 text-red-600 border-red-100",
-    emerald: "bg-emerald-50 text-emerald-600 border-emerald-100"
+    emerald: "bg-emerald-50 text-emerald-600 border-emerald-100",
+    slate: "bg-slate-50 text-slate-600 border-slate-100",
+    purple: "bg-purple-50 text-purple-600 border-purple-100",
+    pink: "bg-pink-50 text-pink-600 border-pink-100"
   };
 
   return (

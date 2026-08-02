@@ -19,6 +19,7 @@ export interface Chemical {
   supplier_id: number;
   supplier_name?: string;
   sds_url?: string;
+  physical_state?: string;
 }
 
 export interface InventoryItem {
@@ -41,6 +42,7 @@ export interface InventoryItem {
   expiry_date: string;
   opened_at?: string;
   status: string;
+  physical_state?: string;
 }
 
 export interface Transaction {

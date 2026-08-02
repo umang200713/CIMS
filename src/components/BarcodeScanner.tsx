@@ -118,9 +118,9 @@ export default function BarcodeScanner({
     // Look up in passed inventory items
     const match = inventory.find(item => 
       String(item.id) === trimmedCode ||
-      item.cas_number.toLowerCase().trim() === trimmedCode.toLowerCase() ||
+      (item.cas_number && item.cas_number.toLowerCase().trim() === trimmedCode.toLowerCase()) ||
       (item.batch_number && item.batch_number.toLowerCase().trim() === trimmedCode.toLowerCase()) ||
-      item.chemical_name.toLowerCase().trim() === trimmedCode.toLowerCase()
+      (item.chemical_name && item.chemical_name.toLowerCase().trim() === trimmedCode.toLowerCase())
     );
 
     if (match) {

@@ -36,6 +36,7 @@ db.exec(`
     storage_requirements TEXT,
     supplier_id INTEGER,
     sds_url TEXT,
+    physical_state TEXT,
     FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
   );
 
@@ -75,6 +76,27 @@ db.exec(`
   );
 `);
 
+// Helper function to auto-classify physical state
+function getPhysicalState(name: string): string {
+  const nameLower = name.toLowerCase();
+  if (nameLower.includes("gas") || nameLower.includes("nitrogen") || nameLower.includes("argon") || nameLower.includes("oxygen") || nameLower.includes("helium") || nameLower.includes("carbon dioxide") || nameLower.includes("methane") || nameLower.includes("chlorine gas")) {
+    return "Gas";
+  }
+  if (nameLower.includes("gel") || nameLower.includes("agarose") || nameLower.includes("silica gel")) {
+    return "Gel";
+  }
+  if (nameLower.includes("powder") || nameLower.includes("phenolphthalein") || nameLower.includes("methyl orange") || nameLower.includes("bromothymol") || nameLower.includes("oxide") || nameLower.includes("hydride") || nameLower.includes("hydroxide") || nameLower.includes("carbonate") || nameLower.includes("bicarbonate") || nameLower.includes("azide") || nameLower.includes("trioxide") || nameLower.includes("dioxide")) {
+    return "Powder";
+  }
+  if (nameLower.includes("crystal") || nameLower.includes("sulfate") || nameLower.includes("chloride") || nameLower.includes("nitrate") || nameLower.includes("iodide") || nameLower.includes("permanganate") || nameLower.includes("phosphate") || nameLower.includes("dichromate") || nameLower.includes("acetate") || nameLower.includes("citric acid") || nameLower.includes("oxalic acid")) {
+    return "Crystal";
+  }
+  if (nameLower.includes("ethanol") || nameLower.includes("methanol") || nameLower.includes("isopropanol") || nameLower.includes("hexane") || nameLower.includes("toluene") || nameLower.includes("acid") || nameLower.includes("ether") || nameLower.includes("water") || nameLower.includes("dmso") || nameLower.includes("dmf") || nameLower.includes("pyridine") || nameLower.includes("ammonia") || nameLower.includes("formaldehyde") || nameLower.includes("acetonitrile") || nameLower.includes("sulfide") || nameLower.includes("liquid")) {
+    return "Liquid";
+  }
+  return "Solid";
+}
+
 // Simple migration to add missing columns if they don't exist
 const tableInfo = db.prepare("PRAGMA table_info(chemicals)").all() as any[];
 const columns = tableInfo.map(c => c.name);
@@ -88,6 +110,64 @@ if (!columns.includes("safety_info")) {
 if (!columns.includes("storage_requirements")) {
   db.exec("ALTER TABLE chemicals ADD COLUMN storage_requirements TEXT");
 }
+if (!columns.includes("physical_state")) {
+  db.exec("ALTER TABLE chemicals ADD COLUMN physical_state TEXT");
+}
+
+// Reset physical_state to NULL for non-seeded chemicals so they display as "Not Assigned"
+const seededNames = [
+  "Ethanol", "Hydrochloric Acid", "Sodium Hydroxide", "Acetone", "Acetic Acid",
+  "Nitric Acid", "Sulfuric Acid", "Methanol", "Isopropanol", "Hexane", "Toluene",
+  "Dichloromethane", "Chloroform", "Tetrahydrofuran", "Ethyl Acetate", "Ammonia Solution",
+  "Phosphoric Acid", "Potassium Hydroxide", "Hydrogen Peroxide (30%)", "Sodium Carbonate",
+  "Sodium Bicarbonate", "Calcium Chloride", "Magnesium Sulfate", "Potassium Permanganate",
+  "Silver Nitrate", "Iodine", "Phenolphthalein", "Methyl Orange", "Bromothymol Blue",
+  "Citric Acid", "Oxalic Acid", "Barium Chloride", "Copper(II) Sulfate", "Iron(III) Chloride",
+  "Zinc Sulfate", "Manganese(II) Chloride", "Cobalt(II) Chloride", "Nickel(II) Sulfate",
+  "Sodium Thiosulfate", "Ammonium Sulfate", "Lead(II) Nitrate", "Silver Chloride",
+  "Aluminium Nitrate", "Ammonium Nitrate", "Cobalt(II) Nitrate", "Copper(II) Nitrate",
+  "Iron(III) Nitrate", "Nickel(II) Nitrate", "Zinc Nitrate", "Potassium Nitrate",
+  "Magnesium Nitrate", "Calcium Nitrate", "Sodium Nitrate", "Ammonium Chloride",
+  "Potassium Chloride", "Sodium Chloride", "Lithium Chloride", "Calcium Carbonate",
+  "Barium Carbonate", "Copper(II) Carbonate", "Lead(II) Carbonate", "Zinc Carbonate",
+  "Magnesium Carbonate", "Ammonium Hydroxide", "Barium Hydroxide", "Calcium Hydroxide",
+  "Aluminium Hydroxide", "Iron(III) Hydroxide", "Copper(II) Hydroxide", "Zinc Hydroxide",
+  "Lead(II) Oxide", "Copper(II) Oxide", "Iron(III) Oxide", "Manganese(IV) Oxide",
+  "Zinc Oxide", "Aluminium Oxide", "Silicon Dioxide", "Sulfur", "Carbon (Activated Charcoal)",
+  "Phosphorus (Red)", "Potassium Bromide", "Sodium Bromide", "Potassium Iodide",
+  "Sodium Iodide", "Ammonium Oxalate", "Potassium Oxalate", "Sodium Oxalate",
+  "Ammonium Phosphate", "Potassium Phosphate", "Sodium Phosphate", "Magnesium Phosphate",
+  "Calcium Phosphate", "Aluminium Sulfate", "Iron(II) Sulfate", "Iron(III) Sulfate",
+  "Potassium Sulfate", "Sodium Sulfate", "Magnesium Sulfate", "Calcium Sulfate",
+  "Barium Sulfate", "Zinc Sulfate", "Copper(II) Chloride", "Iron(II) Chloride",
+  "Iron(III) Chloride", "Magnesium Chloride", "Aluminium Chloride", "Nickel(II) Chloride",
+  "Cobalt(II) Chloride", "Zinc Chloride", "Lead(II) Chloride", "Barium Chloride",
+  "Strontium Chloride", "Lithium Chloride", "Potassium Chloride", "Sodium Chloride",
+  "Ammonium Chloride", "Calcium Chloride", "Potassium Carbonate", "Sodium Carbonate",
+  "Potassium Hydroxide", "Sodium Hydroxide", "Barium Hydroxide", "Calcium Hydroxide",
+  "Lead(II) Nitrate", "Copper(II) Nitrate", "Nickel(II) Nitrate", "Cobalt(II) Nitrate",
+  "Zinc Nitrate", "Iron(III) Nitrate", "Aluminium Nitrate", "Silver Nitrate",
+  "Mercury(II) Chloride", "Cadmium Chloride", "Antimony Trichloride", "Bismuth Nitrate",
+  "Tin(II) Chloride", "Titanium Tetrachloride", "Vanadium(V) Oxide", "Chromium(III) Oxide",
+  "Molybdenum Trioxide", "Tungsten Hexachloride", "Uranyl Nitrate", "Thorium Nitrate",
+  "Palladium(II) Chloride", "Platinum(IV) Chloride", "Gold(III) Chloride", "Silver Chloride",
+  "Copper(I) Chloride", "Mercury(I) Nitrate", "Lead(II) Acetate", "Thallium(I) Sulfate",
+  "Indium(III) Chloride", "Gallium(III) Chloride", "Germanium Tetrachloride", "Arsenic Trioxide",
+  "Selenium Dioxide", "Tellurium Dioxide", "Water", "Nitrogen (Compressed)", "Argon (Compressed)",
+  "Silica Gel (Orange indicator)", "Agarose Gel"
+];
+const placeholders = seededNames.map(() => "?").join(",");
+db.prepare(`UPDATE chemicals SET physical_state = NULL WHERE name NOT IN (${placeholders})`).run(seededNames);
+
+// Auto-populate physical_state for all chemicals if it is null
+const allChemicals = db.prepare("SELECT id, name FROM chemicals WHERE physical_state IS NULL").all() as { id: number, name: string }[];
+const updateStateStmt = db.prepare("UPDATE chemicals SET physical_state = ? WHERE id = ?");
+db.transaction(() => {
+  for (const chem of allChemicals) {
+    const state = getPhysicalState(chem.name);
+    updateStateStmt.run(state, chem.id);
+  }
+})();
 
 const inventoryTableInfo = db.prepare("PRAGMA table_info(inventory)").all() as any[];
 const inventoryColumns = inventoryTableInfo.map(c => c.name);
@@ -245,7 +325,11 @@ if (chemicalCount.count < 100) {
     ["Arsenic Trioxide", "1327-53-3", "As2O3", "Toxic/Carcinogen", "Toxic Cabinet", 197.84, "Fatal if swallowed. May cause cancer.", "Store locked up.", s1],
     ["Selenium Dioxide", "7446-08-4", "SeO2", "Toxic", "Toxic Cabinet", 110.96, "Toxic if swallowed. Toxic if inhaled.", "Store locked up.", s2],
     ["Tellurium Dioxide", "7446-07-3", "TeO2", "Toxic", "Toxic Cabinet", 159.60, "Harmful if swallowed. Suspected of damaging fertility.", "Store locked up.", s1],
-    ["Water", "7732-18-5", "H2O", "None", "General Shelf", 18.02, "Not a hazardous substance.", "Store in a cool, dry place.", s1]
+    ["Water", "7732-18-5", "H2O", "None", "General Shelf", 18.02, "Not a hazardous substance.", "Store in a cool, dry place.", s1],
+    ["Nitrogen (Compressed)", "7727-37-9", "N2", "None", "Gas Cylinder Rack", 28.01, "Simple asphyxiant. High pressure gas.", "Store in a well-ventilated place. Keep cylinder secured.", s1],
+    ["Argon (Compressed)", "7440-37-1", "Ar", "None", "Gas Cylinder Rack", 39.95, "Simple asphyxiant. High pressure gas.", "Store in a well-ventilated place. Keep cylinder secured.", s2],
+    ["Silica Gel (Orange indicator)", "112926-00-8", "SiO2", "None", "General Shelf", 60.08, "May cause respiratory irritation.", "Keep container tightly closed in a dry place.", s1],
+    ["Agarose Gel", "9012-36-6", "C12H18O9", "None", "General Shelf", 306.3, "Not a hazardous substance.", "Store in a cool, dry place.", s2]
   ];
 
   for (const chem of chemicalsToSeed) {
@@ -255,7 +339,15 @@ if (chemicalCount.count < 100) {
       
       // Add some random inventory for each
       const qty = Math.floor(Math.random() * 1000) + 50;
-      const unit = chem[2].includes("H") && chem[2].length < 10 ? "mL" : "g";
+      const state = getPhysicalState(chem[0]);
+      let unit = "g";
+      if (state === "Liquid") {
+        unit = "mL";
+      } else if (state === "Gas") {
+        unit = "L";
+      } else if (state === "Gel") {
+        unit = "g";
+      }
       
       // 15% chance of being expired
       const isExpired = Math.random() < 0.15;
@@ -376,9 +468,45 @@ async function startServer() {
     res.json(chemicals);
   });
 
+  app.post("/api/chemicals", (req, res) => {
+    const role = req.headers["x-user-role"];
+    if (role !== "admin" && role !== "technician") {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+    const { name, cas_number, formula, hazard_class, storage_type, molecular_weight, safety_info, storage_requirements, supplier_id, physical_state } = req.body;
+    try {
+      const info = db.prepare(`
+        INSERT INTO chemicals (name, cas_number, formula, hazard_class, storage_type, molecular_weight, safety_info, storage_requirements, supplier_id, physical_state)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(name, cas_number, formula, hazard_class, storage_type, molecular_weight, safety_info, storage_requirements, supplier_id, physical_state);
+      res.json({ id: info.lastInsertRowid });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  app.patch("/api/chemicals/:id", (req, res) => {
+    const role = req.headers["x-user-role"];
+    if (role !== "admin" && role !== "technician") {
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+    const { id } = req.params;
+    const { name, cas_number, formula, hazard_class, storage_type, molecular_weight, safety_info, storage_requirements, supplier_id, physical_state } = req.body;
+    try {
+      db.prepare(`
+        UPDATE chemicals 
+        SET name = ?, cas_number = ?, formula = ?, hazard_class = ?, storage_type = ?, molecular_weight = ?, safety_info = ?, storage_requirements = ?, supplier_id = ?, physical_state = ?
+        WHERE id = ?
+      `).run(name, cas_number, formula, hazard_class, storage_type, molecular_weight, safety_info, storage_requirements, supplier_id, physical_state, id);
+      res.json({ success: true });
+    } catch (err: any) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
   app.get("/api/inventory", (req, res) => {
     const inventory = db.prepare(`
-      SELECT i.*, c.name as chemical_name, c.cas_number, c.formula, c.hazard_class, c.storage_type, c.molecular_weight, c.safety_info, c.storage_requirements
+      SELECT i.*, c.name as chemical_name, c.cas_number, c.formula, c.hazard_class, c.storage_type, c.molecular_weight, c.safety_info, c.storage_requirements, c.physical_state
       FROM inventory i
       JOIN chemicals c ON i.chemical_id = c.id
       WHERE i.status = 'active'
@@ -416,7 +544,7 @@ async function startServer() {
     const { id } = req.params;
     const { quantity, user, date } = req.body;
     
-    const current = db.prepare("SELECT quantity FROM inventory WHERE id = ?").get() as { quantity: number };
+    const current = db.prepare("SELECT quantity FROM inventory WHERE id = ?").get(id) as { quantity: number };
     if (!current) return res.status(404).json({ error: "Not found" });
     
     const newQuantity = current.quantity - quantity;

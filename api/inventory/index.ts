@@ -14,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method === 'GET') {
       const { rows } = await query(`
         SELECT i.*, c.name as chemical_name, c.cas_number, c.formula, c.hazard_class,
-               c.storage_type, c.molecular_weight, c.safety_info, c.storage_requirements
+               c.storage_type, c.molecular_weight, c.safety_info, c.storage_requirements, c.physical_state
         FROM inventory i
         JOIN chemicals c ON i.chemical_id = c.id
         WHERE i.status = 'active'

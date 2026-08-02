@@ -3,6 +3,12 @@ import { X, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { Chemical } from "../types";
 import { api } from "../services/api";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 interface InventoryModalProps {
   isOpen: boolean;
@@ -10,6 +16,23 @@ interface InventoryModalProps {
   chemicals: Chemical[];
   onSuccess: () => void;
 }
+
+const getAllowedUnits = (state?: string) => {
+  switch (state) {
+    case "Liquid":
+      return ["mL", "L"];
+    case "Solid":
+    case "Powder":
+    case "Crystal":
+      return ["g", "kg"];
+    case "Gas":
+      return ["L", "Cylinders"];
+    case "Gel":
+      return ["g", "mL"];
+    default:
+      return ["mL", "L", "g", "kg", "mg"];
+  }
+};
 
 export default function InventoryModal({ isOpen, onClose, chemicals, onSuccess }: InventoryModalProps) {
   const [loading, setLoading] = useState(false);
@@ -23,6 +46,23 @@ export default function InventoryModal({ isOpen, onClose, chemicals, onSuccess }
     batch_number: "",
     expiry_date: "",
   });
+
+  const selectedChemical = chemicals.find(c => String(c.id) === formData.chemical_id);
+  const physicalState = selectedChemical?.physical_state;
+  const allowedUnits = getAllowedUnits(physicalState);
+
+  const handleChemicalChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const nextChemId = e.target.value;
+    const nextChem = chemicals.find(c => String(c.id) === nextChemId);
+    const nextState = nextChem?.physical_state;
+    const nextUnits = getAllowedUnits(nextState);
+
+    setFormData(prev => ({
+      ...prev,
+      chemical_id: nextChemId,
+      unit: nextUnits.includes(prev.unit) ? prev.unit : nextUnits[0] || "g"
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,13 +125,30 @@ export default function InventoryModal({ isOpen, onClose, chemicals, onSuccess }
                   required
                   className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all"
                   value={formData.chemical_id}
-                  onChange={(e) => setFormData({ ...formData, chemical_id: e.target.value })}
+                  onChange={handleChemicalChange}
                 >
                   <option value="">Select a chemical...</option>
                   {chemicals.map(c => (
                     <option key={c.id} value={c.id}>{c.name} ({c.cas_number})</option>
                   ))}
                 </select>
+                {physicalState && (
+                  <div className="mt-1.5 flex items-center gap-2 animate-in fade-in duration-300">
+                    <span className="text-xs font-semibold text-slate-400">Physical State:</span>
+                    <span className={cn(
+                      "px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border",
+                      physicalState === "Liquid" ? "bg-blue-50 text-blue-700 border-blue-100" :
+                      physicalState === "Solid" ? "bg-slate-100 text-slate-700 border-slate-200" :
+                      physicalState === "Powder" ? "bg-orange-50 text-orange-700 border-orange-100" :
+                      physicalState === "Crystal" ? "bg-purple-50 text-purple-700 border-purple-100" :
+                      physicalState === "Gas" ? "bg-emerald-50 text-emerald-700 border-emerald-100" :
+                      physicalState === "Gel" ? "bg-pink-50 text-pink-700 border-pink-100" :
+                      "bg-slate-100 text-slate-700 border-slate-200"
+                    )}>
+                      {physicalState}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -113,11 +170,9 @@ export default function InventoryModal({ isOpen, onClose, chemicals, onSuccess }
                     value={formData.unit}
                     onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
                   >
-                    <option value="mL">mL</option>
-                    <option value="L">L</option>
-                    <option value="g">g</option>
-                    <option value="kg">kg</option>
-                    <option value="mg">mg</option>
+                    {allowedUnits.map(u => (
+                      <option key={u} value={u}>{u}</option>
+                    ))}
                   </select>
                 </div>
               </div>
